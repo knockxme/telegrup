@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ApiFile, ApiFolder } from "@/lib/types";
 import { formatBytes, formatDuration } from "@/lib/format";
-
-const POLL_MS = 3000;
 
 const STATUS_STYLE: Record<ApiFile["status"], string> = {
   uploading: "text-[var(--text-dim)]",
@@ -22,20 +20,6 @@ interface FileGridProps {
 
 export function FileGrid({ initialFiles, folders, selectedFolderId }: FileGridProps) {
   const [files, setFiles] = useState(initialFiles);
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch("/api/files");
-        if (!res.ok) return;
-        const body = await res.json();
-        setFiles(body.files);
-      } catch {
-        // transient network hiccup — next tick retries
-      }
-    }, POLL_MS);
-    return () => clearInterval(interval);
-  }, []);
 
   function moveFile(fileId: string, folderId: string) {
     setFiles((prev) => prev.map((f) => (f.id === fileId ? { ...f, folderId: folderId || null } : f)));
