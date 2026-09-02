@@ -33,6 +33,10 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma7.config.ts ./prisma7.config.ts
+# prisma/seed.ts imports from src/lib — only needed for `npm run db:seed`,
+# not served at runtime, but the module has to exist on disk to resolve.
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
 RUN mkdir -p /app/tmp/uploads /app/tmp/hls /app/public/thumbnails /app/public/captions \
   && chown -R node:node /app
