@@ -1,49 +1,36 @@
+@import "tailwindcss";
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #0b0d12;
+  --bg-elevated: #12151c;
+  --border: #22262f;
+  --text: #e7e9ee;
+  --text-dim: #8b93a3;
+  --accent: #5b8cff;
+  --accent-hover: #4472e0;
+  --danger: #e5586b;
+  --ok: #3fbf7f;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
-a {
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+}
+
+input,
+button,
+select {
+  font: inherit;
   color: inherit;
-  text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Forward-10 button reuses JW Player's stock rewind-10 icon, mirrored to point
+   the opposite direction instead of drawing a separate icon. */
+.jw-icon-forward10 svg {
+  transform: scaleX(-1);
 }

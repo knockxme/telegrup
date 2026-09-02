@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+enum AccountStatus {
+  active
+  needs_reauth
+  disabled
+}
+
+model TelegramAccount {
+  id               String        @id @default(cuid())
+  label            String
+  phone            String
+  sessionStringEnc String
+  isPremium        Boolean       @default(false)
+  storageChannelId String?
+  status           AccountStatus @default(active)
+  createdAt        DateTime      @default(now())
+  files            File[]
+}
+
+enum FileStatus {
+  uploading
+  processing
+  ready
+  failed
+}
+
+enum FileKind {
+  video
+  other
+}
+
+model Folder {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  files     File[]
+}
+
+model File {
+  id              String          @id @default(cuid())
+  filename        String
+  mimeType        String
+  sizeBytes       BigInt
+  kind            FileKind        @default(other)
+  status          FileStatus      @default(uploading)
+  thumbnailPath   String?
+  captionPath     String?
+  durationSeconds Float?
+  accountId       String
+  account         TelegramAccount @relation(fields: [accountId], references: [id])
+  parts           FilePart[]
+  folderId        String?
+  folder          Folder?         @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  shareToken      String?         @unique
+  hlsAllowedHosts String[]        @default([])
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([folderId])
+}
+
+enum ApiKeyRole {
+  read
+  upload
+  full
+}
+
+model ApiKey {
+  id         String     @id @default(cuid())
+  label      String
+  keyId      String     @unique
+  secretHash String
+  role       ApiKeyRole
+  createdAt  DateTime   @default(now())
+  lastUsedAt DateTime?
+}
+
+model FilePart {
+  id                String   @id @default(cuid())
+  fileId            String
+  file              File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  partIndex         Int
+  telegramMessageId BigInt
+  partSizeBytes     BigInt
+  byteOffsetStart   BigInt
+
+  @@unique([fileId, partIndex])
+  @@index([fileId])
+}

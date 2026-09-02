@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+tmp
+public/thumbnails/*
+!public/thumbnails/.gitkeep
+public/captions/*
+!public/captions/.gitkeep
+.env
+.env.*
+Test Files
+*.md

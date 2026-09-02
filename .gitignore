@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# runtime state (not source)
+/tmp/uploads/*
+!/tmp/uploads/.gitkeep
+/tmp/hls/*
+!/tmp/hls/.gitkeep
+/public/thumbnails/*
+!/public/thumbnails/.gitkeep
+/public/captions/*
+!/public/captions/.gitkeep
+
+# personal test assets, not app source
+/Test Files/

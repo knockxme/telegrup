@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: telegrup
+      # Required — no fallback. Set in .env (docker compose auto-loads it from
+      # the repo root for this substitution), e.g. `openssl rand -hex 24`. A
+      # weak fallback here previously meant a forgotten .env entry silently
+      # shipped Postgres with a guessable password instead of failing loud.
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: telegrup
+    ports:
+      # Bound to localhost only — this is for reaching Postgres from `npm run
+      # dev` on the same machine when running the app outside Docker. On a real
+      # VPS, publishing this on 0.0.0.0 would make Postgres directly reachable
+      # from the public internet; mass scanners probe for exactly that plus
+      # default credentials. The app container itself never uses this mapping —
+      # it talks to postgres:5432 over the internal Docker network below.
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: "postgresql://telegrup:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/telegrup?schema=public"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/login').then(r => process.exit(r.status < 500 ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - upload_tmp:/app/tmp/uploads
+      - thumbnails:/app/public/thumbnails
+      - captions:/app/public/captions
+      - hls_cache:/app/tmp/hls
+
+volumes:
+  postgres_data:
+  upload_tmp:
+  thumbnails:
+  captions:
+  hls_cache:

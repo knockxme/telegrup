@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored JW Player build output — not our source, don't lint it.
+    "public/**",
   ]),
 ]);
 
