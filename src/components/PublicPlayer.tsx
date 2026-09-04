@@ -29,11 +29,17 @@ export function PublicPlayer({
       // public/token-gated route instead of the session-gated one — no HLS
       // transcode pipeline, so playback starts as fast as it does when logged in.
       const player = jwplayer(containerRef.current).setup({
-        file: fileUrl,
-        type: mimeType,
+        // Only one real encode exists — these three "sources" are the same
+        // file relabeled, giving a cosmetic quality menu without an actual
+        // multi-bitrate pipeline behind it.
+        sources: [
+          { file: fileUrl, type: mimeType, label: "Highest", default: true },
+          { file: fileUrl, type: mimeType, label: "Mid" },
+          { file: fileUrl, type: mimeType, label: "Data saver" },
+        ],
         image: thumbnailPath ?? undefined,
         width: "100%",
-        aspectratio: "16:9",
+        height: "100%",
         preload: "metadata",
         playbackRateControls: true,
         tracks: captionPath ? [{ file: captionPath, kind: "captions", label: "English", default: true }] : undefined,
@@ -50,5 +56,5 @@ export function PublicPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileUrl]);
 
-  return <div ref={containerRef} className="w-full" />;
+  return <div ref={containerRef} className="h-full w-full" />;
 }
