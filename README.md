@@ -129,3 +129,27 @@ Full endpoint reference (methods, required role, curl examples) lives at
 - `X-Forwarded-For` (used for login rate-limiting) is only trustworthy behind
   a reverse proxy that sets it itself — see the comment in
   `src/lib/loginRateLimit.ts` if you're exposing the app any other way.
+
+### Redeploying
+
+- **Normal update** (pull latest code, keep data):
+  ```bash
+  git pull
+  docker compose up -d --build app
+  ```
+- **Full clean redeploy** (also wipes Postgres + all volumes — every file
+  record, share token, Telegram account, and API key is gone; the files
+  themselves stay on Telegram but you lose the DB rows that point to them):
+  ```bash
+  git pull
+  docker compose down -v
+  docker system prune -af --volumes   # also drop dangling images/layers + unused build cache
+  docker compose build --no-cache app
+  docker compose up -d
+  docker compose logs -f app   # confirm migrations run clean, then Ctrl+C
+  ```
+  `docker system prune -af --volumes` removes *every* stopped container,
+  unused image, and unused volume on the host, not just this project's — safe
+  on a VPS dedicated to this app, risky if anything else runs there.
+  Re-link Telegram accounts and re-seed the login (`npm run db:seed`, see
+  *One-time setup* above) afterward — a volume wipe removes those too.
