@@ -10,7 +10,7 @@ export default async function WatchPage({ params }: { params: Promise<{ id: stri
   if (!file || file.kind !== "video") notFound();
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-3 px-6 py-8">
+    <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col justify-center gap-3 px-6 py-8">
       <h1 className="truncate text-sm text-[var(--text-dim)]">{file.filename}</h1>
       <PublicPlayer
         fileUrl={`/api/public/${id}/${token}`}
