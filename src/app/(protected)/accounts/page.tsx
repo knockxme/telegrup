@@ -17,7 +17,7 @@ export default async function AccountsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-lg font-semibold">Telegram accounts</h1>
+      <h1 className="text-lg font-semibold">Storage accounts</h1>
       <AccountsManager initialAccounts={apiAccounts} />
     </div>
   );

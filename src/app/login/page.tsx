@@ -34,12 +34,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 px-4">
+      <div className="flex flex-col items-center gap-2 text-center">
+        <span className="text-2xl font-semibold tracking-tight text-[var(--text)]">Dropcast</span>
+        <p className="text-sm text-[var(--text-dim)]">Private media storage and streaming.</p>
+      </div>
       <form
         onSubmit={onSubmit}
-        className="w-full max-w-sm rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-6"
+        className="w-full max-w-sm rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-6 shadow-xl shadow-black/20"
       >
-        <h1 className="mb-5 text-lg font-semibold">telegrup</h1>
         <div className="mb-3 flex flex-col gap-1">
           <label className="text-sm text-[var(--text-dim)]">Username</label>
           <input

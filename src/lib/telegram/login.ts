@@ -158,8 +158,8 @@ async function finalizeAccount(attempt: LoginAttempt) {
   try {
     const result = await attempt.client.invoke(
       new Api.channels.CreateChannel({
-        title: `telegrup-storage-${attempt.label}`,
-        about: "File storage backend for telegrup. Do not delete.",
+        title: `dropcast-storage-${attempt.label}`,
+        about: "File storage backend for Dropcast. Do not delete.",
         megagroup: false,
       })
     );

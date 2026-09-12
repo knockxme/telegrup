@@ -124,7 +124,7 @@ export function VideoPlayer({ file }: { file: ApiFile }) {
   }
 
   async function deleteFile() {
-    if (!confirm(`Delete "${file.filename}"? This removes it from Telegram too.`)) return;
+    if (!confirm(`Delete "${file.filename}"? This removes it from storage too.`)) return;
     setDeleteBusy(true);
     try {
       const res = await fetch(`/api/files/${file.id}`, { method: "DELETE" });

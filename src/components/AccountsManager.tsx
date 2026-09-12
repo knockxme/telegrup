@@ -99,7 +99,7 @@ export function AccountsManager({ initialAccounts }: { initialAccounts: ApiAccou
   }
 
   async function removeAccount(account: ApiAccount) {
-    if (!confirm(`Remove account "${account.label}"? Files already stored there stay in Telegram but this app loses access to them unless a matching account is re-added.`))
+    if (!confirm(`Remove account "${account.label}"? Files already stored there stay in storage but this app loses access to them unless a matching account is re-added.`))
       return;
     await fetch(`/api/accounts/${account.id}`, { method: "DELETE" });
     setAccounts((prev) => prev.filter((a) => a.id !== account.id));
@@ -144,7 +144,7 @@ export function AccountsManager({ initialAccounts }: { initialAccounts: ApiAccou
           onClick={() => setWizard({ step: "form" })}
           className="w-fit rounded bg-[var(--accent)] px-4 py-2 text-sm font-medium hover:bg-[var(--accent-hover)]"
         >
-          Add Telegram account
+          Add storage account
         </button>
       )}
 
@@ -171,7 +171,7 @@ export function AccountsManager({ initialAccounts }: { initialAccounts: ApiAccou
 
           {wizard.step === "code" && (
             <>
-              <p className="text-sm text-[var(--text-dim)]">Enter the code Telegram sent to {phone}.</p>
+              <p className="text-sm text-[var(--text-dim)]">Enter the code sent to {phone}.</p>
               <Field label="Code" value={code} onChange={setCode} placeholder="12345" />
               <div className="flex gap-2">
                 <button

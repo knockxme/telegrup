@@ -12,7 +12,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
       <header className="flex items-center justify-between border-b border-[var(--border)] px-6 py-3">
         <nav className="flex items-center gap-5 text-sm">
           <Link href="/" className="font-semibold tracking-tight text-[var(--text)]">
-            telegrup
+            Dropcast
           </Link>
           <Link href="/" className="text-[var(--text-dim)] hover:text-[var(--text)]">
             Files

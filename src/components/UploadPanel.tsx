@@ -111,7 +111,7 @@ export function UploadPanel({ accounts, folders }: UploadPanelProps) {
     return (
       <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] p-6 text-center">
         <p className="text-[var(--text-dim)]">
-          No Telegram account connected yet.{" "}
+          No storage account connected yet.{" "}
           <Link href="/accounts" className="text-[var(--accent)] hover:underline">
             Add one
           </Link>{" "}

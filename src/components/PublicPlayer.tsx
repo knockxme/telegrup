@@ -33,9 +33,9 @@ export function PublicPlayer({
         // file relabeled, giving a cosmetic quality menu without an actual
         // multi-bitrate pipeline behind it.
         sources: [
-          { file: fileUrl, type: mimeType, label: "Highest", default: true },
-          { file: fileUrl, type: mimeType, label: "Mid" },
-          { file: fileUrl, type: mimeType, label: "Data saver" },
+          { file: fileUrl, type: mimeType, label: "Highest Available", default: true },
+          { file: fileUrl, type: mimeType, label: "Moderate" },
+          { file: fileUrl, type: mimeType, label: "Data Saver" },
         ],
         image: thumbnailPath ?? undefined,
         width: "100%",

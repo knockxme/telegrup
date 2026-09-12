@@ -84,7 +84,7 @@ export default function DocsPage() {
           </tbody>
         </table>
         <p className="text-sm text-[var(--text-dim)]">
-          Telegram account login (phone/2FA) and account edit/delete are dashboard-only — not exposed to API keys, since
+          Storage account login (phone/2FA) and account edit/delete are dashboard-only — not exposed to API keys, since
           that flow handles live verification codes.
         </p>
       </section>
@@ -95,7 +95,7 @@ export default function DocsPage() {
           method="GET"
           path="/api/accounts"
           role="read"
-          desc="List connected Telegram accounts — you need an accountId to upload."
+          desc="List connected storage accounts — you need an accountId to upload."
           example={`curl -H "Authorization: Bearer $KEY" https://your-host/api/accounts`}
         />
         <Endpoint
@@ -173,7 +173,7 @@ export default function DocsPage() {
           method="DELETE"
           path="/api/files/:id"
           role="full"
-          desc="Delete a file — removes it from Telegram too."
+          desc="Delete a file — removes it from storage too."
           example={`curl -X DELETE -H "Authorization: Bearer $KEY" https://your-host/api/files/FILE_ID`}
         />
         <Endpoint
